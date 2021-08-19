@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 扫描哪个包下面有Spring中加了注解的组件 例如我们的Controller -->
+    <context:component-scan base-package="com.admin.dao"/>
+    <context:component-scan base-package="com.admin.service"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/shoppingweb?" />
+        <property name="username" value="root" />
+        <property name="password" value="yang611612" />
+        <property name="maxActive" value="20" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <!--创建dao对象，使用sqlsession的getMapper ( studentDao.class )
+    MNapperScannerConfigurer:在内部调用getMapper()生成每个dao接口的代理对象。-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定sqlsessionFactory对象的id-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--指定包名,包名是dao接口所在的包名。
+        MapperScannerConfigurer会扫描这个包中的所有接口,把每个接口都执行一次getMapper()方法,得到每个接口的dao对象。
+        创建好的dao对象放入到spring的容器中的。
+        -->
+        <property name="basePackage" value="com.admin.dao"/>
+        <property name="beanName"  value="com.admin.service"/>
+    </bean>
+    
+
+
+</beans>

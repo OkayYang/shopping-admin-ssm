@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!--        输出日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--    对返回类型定义别名-->
+    <typeAliases>
+        <!--        name是包名，包下所有类，类名就是别名，不区分大小写-->
+        <package name="com.admin.domain"/>
+    </typeAliases>
+    <mappers>
+        <!--        第二种方式，包名下的xml都加在进去-->
+        <package name="com.admin.dao"/>
+    </mappers>
+</configuration>

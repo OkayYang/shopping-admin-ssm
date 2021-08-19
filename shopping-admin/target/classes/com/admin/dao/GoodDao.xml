@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace一般与接口名一致，parameterType单一参数类型,id一般与对应方法一致，resultType与返回类型一致-->
+<mapper namespace="com.admin.dao.GoodDao">
+
+    <select id="countGood" resultType="Int">
+      select count(id) from goods
+    </select>
+    <select id="totalSale" resultType="Double">
+        select COALESCE(sum(goods.price*record.num),0.0) from record,goods where record.gid = goods.id
+    </select>
+    <select id="todaySale" resultType="Double" parameterType="String">
+        select COALESCE(sum(goods.price*record.num), 0.0) from record,goods where record.datetime like #{date} and record.gid = goods.id
+    </select>
+
+
+</mapper>
+
