@@ -29,16 +29,18 @@
           <cite>导航元素</cite></a>
       </span>
   <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+  <!--<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="user-list.html" title="刷新">-->
     <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="x-body">
   <div class="layui-row">
     <form class="layui-form layui-col-md12 x-so">
-      <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+      <input type="text" name="uname"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
       <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
     </form>
   </div>
-  <table class="layui-table" lay-data="{url:'/admin/user/list',page:true,toolbar: '#toolbarDemo',id:'test',limit:10}" lay-filter="test">
+  <table  class="layui-table" lay-data="{url:'/admin/user/list',page:true,toolbar: '#toolbarDemo',id:'test',limit:10}" lay-filter="test">
+    <form>
     <thead>
     <tr>
       <th lay-data="{type:'checkbox'}">ID</th>
@@ -52,20 +54,22 @@
       <th lay-data="{field:'udate' , minWidth: 150}">注册时间</th>
     </tr>
     </thead>
+    </form>
   </table>
 
 </div>
 <script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+    <button class="layui-btn layui-btn-danger" lay-event="delCheckData"><i class="layui-icon"></i>删除选中用户</button>
+    <button class="layui-btn layui-btn-sm" onclick="x_admin_show('添加用户','/admin/user-add.html',600,500)"><i class="layui-icon"></i>添加用户</button>
     <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
   </div>
 </script>
 <script type="text/html" id="switchTpl">
   <!-- 这里的 checked 的状态只是演示 -->
-  <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked' : '' }}>
+  <input type="checkbox" name="sex" id="checkSex" value="{{d.uid}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.usex == "女" ? 'checked': '' }}>
 </script>
+
 <script>
   layui.use('laydate', function(){
     var laydate = layui.laydate;
@@ -86,32 +90,122 @@
 <script>
   layui.use('table', function(){
     var table = layui.table;
+    var url;
+    var reg = new RegExp("(^|&)" + "uname" + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null){
+      if (unescape(r[2])!=""){
+        url = "/admin/user/list?"+unescape(r[0]);
+        table.reload('test', {
+          url: url
+        });
+      }
+    }
 
+    var form = layui.form;
+    form.on('switch(sexDemo)', function(obj){
+      var uid = obj.value;
+      var usex;
+      if (obj.elem.checked) {
+        usex = "女"
+      }else {
+        usex = "男"
+      }
+      var data = {
+        uid:uid,
+        usex:usex
+      }
+      console.log(data);
+      $.ajax({
+        type:"post",
+        url:"/admin/user/edit",
+        data:JSON.stringify(data),
+        charset:"utf-8",
+        contentType : 'application/json;charset=utf-8',
+        dataType: "json",
+        success: function(data) {
+          if (data.status==200){
+            layer.alert(data.message, {icon: 6});
+          }else {
+            layer.alert(data.message, {icon: 5});
+          }
+        },
+      })
+
+
+    });
     //监听单元格编辑
     table.on('edit(test)', function(obj){
+
       var value = obj.value //得到修改后的值
               ,data = obj.data //得到所在行所有键值
               ,field = obj.field; //得到字段
-      layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+      console.log(data);
+      $.ajax({
+        type:"post",
+        url:"/admin/user/edit",
+        data:JSON.stringify(data),
+        charset:"utf-8",
+        contentType : 'application/json;charset=utf-8',
+        dataType: "json",
+        success: function(data) {
+          if (data.status==200){
+            layer.alert(data.message, {icon: 6});
+          }else {
+            layer.alert(data.message, {icon: 5});
+          }
+        },
+      })
+      /*layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);*/
     });
 
     //头工具栏事件
     table.on('toolbar(test)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
       switch(obj.event){
-        case 'getCheckData':
+        case 'delCheckData':
           var data = checkStatus.data;
-          layer.alert(JSON.stringify(data));
+          var ids = [];
+          for (let i = 0; i < data.length; i++) {
+            ids[i]=data[i].uid;
+          }
+          console.log(ids)
+
+          layer.confirm('是否删除选中用户?', function(index){
+            //do something
+            $.ajax({
+              type:"post",
+              url:"/admin/user/del",
+              data:{"uids":ids},
+              charset:"utf-8",
+              dataType: "json",
+              traditional: true,
+              success: function(data) {
+                if (data.status==200){
+
+                  layer.alert(data.message, {icon: 6},function () {
+                    location.replace(location.href);
+                  });
+                  layer.close(index);
+                }else {
+                  layer.alert(data.message, {icon: 5},function () {
+                    location.replace(location.href);
+                  });
+                  layer.close(index);
+                }
+              },
+            })
+
+          });
           break;
         case 'getCheckLength':
           var data = checkStatus.data;
           layer.msg('选中了：'+ data.length + ' 个');
           break;
-        case 'isAll':
-          layer.msg(checkStatus.isAll ? '全选': '未全选');
-          break;
       };
     });
+
+
   });
 </script>
 <script>var _hmt = _hmt || []; (function() {

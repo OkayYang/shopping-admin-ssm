@@ -40,7 +40,7 @@
         </ul>-->
         <ul class="layui-nav right" lay-filter="">
           <li class="layui-nav-item">
-            <a href="javascript:;">admin</a>
+            <a href="javascript:;" id="realName">admin</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
               <dd><a onclick="x_admin_show('个人信息','')">个人信息</a></dd>
               <!--<dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>-->
@@ -64,57 +64,19 @@
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li date-refresh="1">
-                        <a _href="member-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员列表(静态表格)</cite>
-                            
-                        </a>
-                    </li >
                     <li>
-                        <a _href="member-list1.html">
+                        <a _href="user-list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员列表(动态表格)</cite>
+                            <cite>会员列表</cite>
                             
                         </a>
                     </li >
                     <li date-refresh="1">
                         <a _href="member-del.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员删除</cite>
+                            <cite>会员删除记录</cite>
                             
                         </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont">&#xe70b;</i>
-                            <cite>会员管理</cite>
-                            <i class="iconfont nav_right">&#xe697;</i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a _href="xxx.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>会员列表</cite>
-                                    
-                                </a>
-                            </li >
-                            <li>
-                                <a _href="xx.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>会员删除</cite>
-                                    
-                                </a>
-                            </li>
-                            <li>
-                                <a _href="xx.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>等级管理</cite>
-                                    
-                                </a>
-                            </li>
-                            
-                        </ul>
                     </li>
                 </ul>
             </li>
@@ -324,6 +286,18 @@
     </div>
     <!-- 底部结束 -->
     <script>
+        $(function () {
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:8080/admin/login/info",
+                charset: "utf-8",
+                success: function (data) {
+                    console.log(data.realName);
+                    $("#realName").text(data.realName);
+                },
+
+            })
+        });
     //百度统计可去掉
     var _hmt = _hmt || [];
     (function() {

@@ -3,6 +3,8 @@ package com.admin.service.Impl;
 import com.admin.dao.UserDao;
 import com.admin.domain.User;
 import com.admin.service.UserService;
+
+import java.util.Date;
 import java.util.List;
 
 import com.admin.utils.UserData;
@@ -69,6 +71,9 @@ public class UserServiceImpl implements UserService
     @Override
     public int insertUser(User user)
     {
+        user.setUdate(new Date());
+
+
         return userDao.insertUser(user);
     }
 
@@ -95,6 +100,11 @@ public class UserServiceImpl implements UserService
     public int deleteUserByUid(Long uid)
     {
         return userDao.deleteUserByUid(uid);
+    }
+
+    @Override
+    public int deleteUserByUids(int[] uids){
+        return userDao.deleteUserByUids(uids);
     }
 
     @Override

@@ -48,6 +48,7 @@ public interface UserService
      * @return 结果
      */
     public int deleteUserByUid(Long uid);
+    public int deleteUserByUids(int[] uids);
 
     int countUser();
 }

@@ -65,8 +65,12 @@
     </script>
     <script type="text/html" id="switchTpl">
       <!-- 这里的 checked 的状态只是演示 -->
-      <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked' : '' }}>
+      <form>
+        <input type="checkbox"  name="sex"  value="{{d.id}}"  lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.sex == "男" ? 'checked' : '' }}>
+
+      </form>
     </script>
+
     <script>
       layui.use('laydate', function(){
         var laydate = layui.laydate;
@@ -87,12 +91,35 @@
     <script>
     layui.use('table', function(){
       var table = layui.table;
+      var form = layui.form;
+      form.on('switch(sexDemo)', function(obj){
+        console.log(obj.value);
+        console.log(obj.elem.checked);
+        var uid = obj.value;
+        var usex;
+        if (obj.elem.checked) {
+          usex = "女"
+        }else {
+          usex = "男"
+        }
+        var test = {
+          uid:uid,
+          usex:usex
+        }
+        console.log(test)
+
+      });
+
       
       //监听单元格编辑
       table.on('edit(test)', function(obj){
+        console.log(obj)
         var value = obj.value //得到修改后的值
         ,data = obj.data //得到所在行所有键值
         ,field = obj.field; //得到字段
+        /*console.log(data);*/
+
+        console.log(JSON.stringify(data))
         layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
       });
 
@@ -102,6 +129,11 @@
         switch(obj.event){
           case 'getCheckData':
             var data = checkStatus.data;
+            var ids = [];
+            for (let i = 0; i < data.length; i++) {
+              ids[i]=data[i].id;
+            }
+            console.log(ids)
             layer.alert(JSON.stringify(data));
           break;
           case 'getCheckLength':

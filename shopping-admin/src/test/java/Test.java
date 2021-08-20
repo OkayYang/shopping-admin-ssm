@@ -37,7 +37,10 @@ public class Test {
         System.out.println(admins.get(0));*/
 
         UserService userService = (UserService) applicationContext.getBean("userServiceImpl");
-        System.out.println(userService.selectUserListByPage(1,10));
+        /*System.out.println(userService.selectUserListByPage(1,10));*/
+        User user =new User();
+        user.setUname("168");
+        System.out.println(userService.selectUserList(user));
 
 
     }
