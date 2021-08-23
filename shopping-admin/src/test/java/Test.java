@@ -1,6 +1,7 @@
 import com.admin.dao.GoodDao;
 import com.admin.dao.UserDao;
 import com.admin.domain.Admin;
+import com.admin.domain.Good;
 import com.admin.domain.User;
 import com.admin.service.AdminService;
 import com.admin.service.GoodService;
@@ -43,5 +44,11 @@ public class Test {
         System.out.println(userService.selectUserList(user));
 
 
+    }
+    @org.junit.Test
+    public void goodTest(){
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-context.xml");
+        GoodService goodService = (GoodService) applicationContext.getBean("goodServiceImpl");
+        System.out.println(goodService.selectGoodsByPage(0,3));
     }
 }

@@ -1,5 +1,6 @@
 package com.admin.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import com.admin.domain.Admin;
@@ -34,9 +35,10 @@ public class UserController {
     }
     @GetMapping("/list")
     @ResponseBody
-    public UserData list(User user,int page,int limit)
-    {
+    public UserData list(User user,int page,int limit) throws UnsupportedEncodingException {
         if (user.getUname()!=null){
+            user.setUname(new String(user.getUname().getBytes("ISO-8859-1"), "utf-8"));
+
             return userService.selectUserList(user);
         }
 
