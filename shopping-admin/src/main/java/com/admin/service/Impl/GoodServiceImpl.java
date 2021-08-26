@@ -21,7 +21,7 @@ public class GoodServiceImpl implements GoodService {
     public GoodData selectGoodsByPage(int page,int limit)
     {
         GoodData goodData = new GoodData();
-        goodData.setData(goodDao.selectGoodsListByPage((page-1)*limit,page*limit));
+        goodData.setData(goodDao.selectGoodsListByPage((page-1)*limit,limit));
         goodData.setMsg("");
         goodData.setCode(0);
         goodData.setCount(goodDao.countGood());

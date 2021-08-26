@@ -45,10 +45,10 @@ public class Test {
 
 
     }
-    @org.junit.Test
+    /*@org.junit.Test
     public void goodTest(){
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-context.xml");
         GoodService goodService = (GoodService) applicationContext.getBean("goodServiceImpl");
         System.out.println(goodService.selectGoodsByPage(0,3));
-    }
+    }*/
 }

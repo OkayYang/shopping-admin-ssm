@@ -22,6 +22,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping()
+    public String main(){
+        return "user-list";
+    }
     /**
      * 查询【请填写功能名称】列表
      */

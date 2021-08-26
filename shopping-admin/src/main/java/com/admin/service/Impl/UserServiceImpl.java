@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService
     @Override
     public UserData selectUserListByPage(int page,int limit){
         UserData userData = new UserData();
-        userData.setData(userDao.selectUserListByPage((page-1)*limit,page*limit));
+        userData.setData(userDao.selectUserListByPage((page-1)*limit,limit));
         userData.setCount(userDao.countUser());
         userData.setMsg("");
         userData.setCode(0);

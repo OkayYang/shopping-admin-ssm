@@ -34,7 +34,10 @@
         <property name="basePackage" value="com.admin.dao"/>
         <property name="beanName"  value="com.admin.service"/>
     </bean>
-    
+
+    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+    </bean>
+
 
 
 </beans>

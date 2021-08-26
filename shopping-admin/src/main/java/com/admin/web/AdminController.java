@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     UserService userService;
     @Autowired
     GoodService goodService;
 
-    @RequestMapping("/welcome")
+    @RequestMapping("/admin/welcome")
     @ResponseBody
     public Welcome welcomeData(){
         Welcome welcome = new Welcome();
@@ -25,6 +24,12 @@ public class AdminController {
         welcome.setTotalSale(goodService.totalSale());
         welcome.setTodaySale(goodService.todaySale());
         return welcome;
+    }
+
+    @RequestMapping("/admin/error")
+
+    public String error(){
+        return "error";
     }
 
 }
