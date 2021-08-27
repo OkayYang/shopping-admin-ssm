@@ -50,7 +50,7 @@ public class RecordUserServiceImpl implements RecordUserService
     {
         DelUserData userData = new DelUserData();
         userData.setData(recordUserDao.selectRecordUserList(recordUser));
-        userData.setCount(userDao.countUser());
+        userData.setCount(recordUserDao.countRecordUser());
         userData.setMsg("");
         userData.setCode(0);
         return userData;
@@ -59,7 +59,7 @@ public class RecordUserServiceImpl implements RecordUserService
     public DelUserData selectUserListByPage(int page, int limit){
         DelUserData userData = new DelUserData();
         userData.setData(recordUserDao.selectUserListByPage((page-1)*limit,limit));
-        userData.setCount(userDao.countUser());
+        userData.setCount(recordUserDao.countRecordUser());
         userData.setMsg("");
         userData.setCode(0);
         return userData;
@@ -121,5 +121,9 @@ public class RecordUserServiceImpl implements RecordUserService
         userDao.insertUser(user);
         recordUserDao.deleteRecordUserByUid(uid);
         return true;
+    }
+    @Override
+    public int countRecordUser(){
+        return recordUserDao.countRecordUser();
     }
 }

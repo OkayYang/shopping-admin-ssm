@@ -1,5 +1,7 @@
 package com.admin.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class RecordUser {
@@ -27,9 +29,11 @@ public class RecordUser {
     private Double ubalance;
 
     /** $column.columnComment */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:sss",timezone = "GMT+8")
     private Date udate;
 
     /** $column.columnComment */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:sss",timezone = "GMT+8")
     private Date deleteTime;
 
     public void setUid(Long uid)

@@ -93,6 +93,9 @@
         <include refid="selectRecordUserVo"/>
         LIMIT #{page},#{limit}
     </select>
+    <select id="countRecordUser" resultType="Int">
+        select count(uid) from record_user
+    </select>
 
 
 

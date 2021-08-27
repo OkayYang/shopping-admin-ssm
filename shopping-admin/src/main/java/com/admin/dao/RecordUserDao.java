@@ -4,6 +4,7 @@ import com.admin.domain.RecordUser;
 import com.admin.domain.User;
 import com.admin.utils.DelUserData;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2021-08-26
  */
+@Repository
 public interface RecordUserDao
 {
     /**
@@ -64,4 +66,6 @@ public interface RecordUserDao
      * @return 结果
      */
     public int deleteRecordUserByUids(int[] uids);
+
+    public int countRecordUser();
 }

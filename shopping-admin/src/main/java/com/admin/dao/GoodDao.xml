@@ -65,7 +65,7 @@
     <delete id="deleteGoodsByIds" parameterType="Int">
         delete from goods where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{ids}
+            #{id}
         </foreach>
     </delete>
 

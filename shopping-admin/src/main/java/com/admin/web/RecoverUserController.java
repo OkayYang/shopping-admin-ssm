@@ -1,11 +1,9 @@
 package com.admin.web;
 
 import com.admin.domain.RecordUser;
-import com.admin.domain.User;
 import com.admin.service.RecordUserService;
 import com.admin.utils.DelUserData;
 import com.admin.utils.Status;
-import com.admin.utils.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,7 @@ public class RecoverUserController {
     private RecordUserService recordUserService;
     @RequestMapping()
     public String main(){
-        return "user-del1";
+        return "user-del";
     }
     /**
      * 查询【请填写功能名称】列表

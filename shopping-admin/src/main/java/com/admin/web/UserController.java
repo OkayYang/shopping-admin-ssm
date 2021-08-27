@@ -35,7 +35,6 @@ public class UserController {
     public UserData list(User user)
     {
         UserData userData = userService.selectUserList(user);
-        System.out.println(userData);
         return userService.selectUserList(user);
     }
     @GetMapping("/list")

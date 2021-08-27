@@ -1,13 +1,7 @@
 import com.admin.dao.GoodDao;
 import com.admin.dao.UserDao;
-import com.admin.domain.Admin;
-import com.admin.domain.Good;
-import com.admin.domain.RecordUser;
-import com.admin.domain.User;
-import com.admin.service.AdminService;
-import com.admin.service.GoodService;
-import com.admin.service.RecordUserService;
-import com.admin.service.UserService;
+import com.admin.domain.*;
+import com.admin.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -53,10 +47,18 @@ public class Test {
         GoodService goodService = (GoodService) applicationContext.getBean("goodServiceImpl");
         System.out.println(goodService.selectGoodsByPage(0,3));
     }*/
-    @org.junit.Test
+    /*@org.junit.Test
     public void recoverUserTest() throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-context.xml");
         RecordUserService service = (RecordUserService) applicationContext.getBean("recordUserServiceImpl");
         service.recoverUser(61L);
+    }*/
+    @org.junit.Test
+    public void orderTest(){
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-context.xml");
+        OrderRecordService service = (OrderRecordService) applicationContext.getBean("orderRecordServiceImpl");
+        OrderRecord record = new OrderRecord();
+        record.setRid(17L);
+        System.out.println(service.selectRecordList(record));
     }
 }

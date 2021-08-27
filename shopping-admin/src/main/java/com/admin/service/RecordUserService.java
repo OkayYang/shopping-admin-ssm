@@ -65,4 +65,5 @@ public interface RecordUserService
     public int deleteRecordUserByUid(Long uid);
 
     public boolean recoverUser(Long uid) throws Exception;
+    public int countRecordUser();
 }

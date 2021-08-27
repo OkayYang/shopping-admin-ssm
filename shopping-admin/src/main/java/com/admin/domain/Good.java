@@ -11,7 +11,6 @@ import java.math.BigDecimal;
  */
 public class Good
 {
-    private static final long serialVersionUID = 1L;
 
     /** $column.columnComment */
     private Long id;
